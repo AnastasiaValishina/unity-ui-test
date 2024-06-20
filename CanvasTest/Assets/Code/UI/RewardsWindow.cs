@@ -1,15 +1,15 @@
-using System.Collections.Generic;
-using System.Linq;
 using Code.Inventory;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RewardsWindow : BaseWindow
 {
-    [SerializeField] private Button _closeButton;
     [SerializeField] private TMP_Text _titleText;
-    [SerializeField] private TMP_Text _rewardsText;
+    [SerializeField] private Transform _rewardsContainer;
+    [SerializeField] private RewardUiItem _rewardPrefab;
+    [SerializeField] private Button _closeButton;
     
     protected override void Awake()
     {
@@ -23,12 +23,18 @@ public class RewardsWindow : BaseWindow
 
         var items = (List<InventoryItem>)args[1];
 
-        _rewardsText.text = string.Join("\n", items.Select(x => $"{x.Title}"));
+        for (int i = 0; i < items.Count; i++)
+        {
+            var rewardItem = Instantiate(_rewardPrefab, _rewardsContainer);
+            rewardItem.SetIcon(items[i].Icon);
+        }
     }
 
     protected override void OnHide()
     {
-    }
-    
-
+		foreach (Transform child in _rewardsContainer)
+		{
+			Destroy(child.gameObject);
+		}
+	}
 }
