@@ -28,6 +28,11 @@ public class RewardsWindow : BaseWindow
             var rewardItem = Instantiate(_rewardPrefab, _rewardsContainer);
             rewardItem.SetIcon(items[i].Icon);
         }
+
+		// устанавливаем мин ширину для контейнера с наградами,
+		// чтобы на любых разрешениях экранов награды отображались согласно тз
+		float parentWidth = _rewardsContainer.transform.parent.GetComponent<RectTransform>().rect.width;
+		_rewardsContainer.GetComponent<LayoutElement>().minWidth = parentWidth;
     }
 
     protected override void OnHide()
