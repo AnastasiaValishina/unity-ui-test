@@ -26,7 +26,7 @@ public class RewardsWindow : BaseWindow
         for (int i = 0; i < items.Count; i++)
         {
             var rewardItem = Instantiate(_rewardPrefab, _rewardsContainer);
-            rewardItem.SetIcon(items[i].Icon);
+            rewardItem.Show(items[i]);
         }
 
 		// устанавливаем мин ширину для контейнера с наградами,
