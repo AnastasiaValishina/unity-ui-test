@@ -40,6 +40,7 @@ public class RewardsWindow : BaseWindow
     {
 		foreach (Transform child in _rewardsContainer)
 		{
+			child.GetComponent<RewardUiItem>().ShowTooltip -= ShowTooltip;
 			Destroy(child.gameObject);
 		}
 	}

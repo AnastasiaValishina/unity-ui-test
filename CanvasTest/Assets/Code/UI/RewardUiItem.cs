@@ -41,6 +41,6 @@ public class RewardUiItem : BaseUiItem, IPointerDownHandler, IPointerUpHandler
 
 	public void OnPointerUp(PointerEventData eventData)
 	{
-
+		_isItemPressed = false;
 	}
 }
