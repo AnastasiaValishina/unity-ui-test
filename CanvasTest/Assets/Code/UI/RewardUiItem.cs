@@ -1,7 +1,6 @@
 using Code.Inventory;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -11,7 +10,7 @@ public class RewardUiItem : BaseUiItem, IPointerDownHandler, IPointerUpHandler, 
 
 	private InventoryItem _inventoryItem;
 
-	private const float TAP_TIME = 1f;
+	private const float TAP_TIME = 0.3f;
 	private bool _isHolding;
 	private bool _isShown = false;
 	private float _pressTime;
@@ -24,7 +23,6 @@ public class RewardUiItem : BaseUiItem, IPointerDownHandler, IPointerUpHandler, 
 
 	private void Update()
 	{
-		Debug.Log("_isShown " + _isShown);
 		if (!_isHolding) return;
 		if (_isShown) return;
 
