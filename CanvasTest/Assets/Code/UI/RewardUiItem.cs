@@ -1,19 +1,20 @@
 using Code.Inventory;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class RewardUiItem : BaseUiItem, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
+public class RewardUiItem : BaseUiItem, IPointerDownHandler, IPointerUpHandler
 {
 	[SerializeField] private Image _icon;
 
 	private InventoryItem _inventoryItem;
 
 	private const float TAP_TIME = 0.3f;
-	private bool _isHolding;
-	private bool _isShown = false;
+	private bool _isItemPressed = false;
 	private float _pressTime;
+
+	public event Action<InventoryItem> ShowTooltip;
 
 	protected override void OnShow(object args)
 	{
@@ -23,43 +24,23 @@ public class RewardUiItem : BaseUiItem, IPointerDownHandler, IPointerUpHandler, 
 
 	private void Update()
 	{
-		if (!_isHolding) return;
-		if (_isShown) return;
+		if (!_isItemPressed) return;
 
 		if (Time.time - _pressTime >= TAP_TIME)
 		{
-			ShowTooltip();			
+			ShowTooltip(_inventoryItem);
+			_isItemPressed = false;
 		}
 	}
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		_isHolding = true;
 		_pressTime = Time.time;
+		_isItemPressed = true;
 	}
 
 	public void OnPointerUp(PointerEventData eventData)
 	{
-		HideTooltip();
-		_isHolding = false;
-	}
 
-	public void OnPointerExit(PointerEventData eventData)
-	{
-		HideTooltip();
-		_isHolding = false;
-	}
-
-	private void HideTooltip()
-	{
-		Get<Tooltip>().Hide();
-		_isShown = false;
-	}
-	private void ShowTooltip()
-	{
-		Get<Tooltip>().Show("", new List<InventoryItem>() {
-			_inventoryItem,
-		});
-		_isShown = true;
 	}
 }

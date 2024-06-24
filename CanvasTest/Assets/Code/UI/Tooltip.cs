@@ -9,7 +9,7 @@ public class Tooltip : BaseWindow
 	[SerializeField] private TMP_Text _titleText;
 	[SerializeField] private TMP_Text _description;
 	[SerializeField] private Image _icon;
-	
+
 	protected override void OnHide()
 	{
 		_titleText.text = "";

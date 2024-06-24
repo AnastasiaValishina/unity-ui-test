@@ -27,6 +27,7 @@ public class RewardsWindow : BaseWindow
         {
             var rewardItem = Instantiate(_rewardPrefab, _rewardsContainer);
             rewardItem.Show(items[i]);
+			rewardItem.ShowTooltip += ShowTooltip;
         }
 
 		// устанавливаем мин ширину для контейнера с наградами,
@@ -42,4 +43,28 @@ public class RewardsWindow : BaseWindow
 			Destroy(child.gameObject);
 		}
 	}
+
+	private void ShowTooltip(InventoryItem item)
+	{
+		Get<Tooltip>().Show("", new List<InventoryItem>() {
+			item,
+		});
+	}
+
+	void Update()
+	{
+		if (Input.touchCount > 0)
+		{
+			Touch touch = Input.GetTouch(0);
+
+			switch (touch.phase)
+			{
+				case TouchPhase.Ended:
+				case TouchPhase.Canceled:
+					Get<Tooltip>().Hide();
+					break;
+			}
+		}
+	}
+
 }
